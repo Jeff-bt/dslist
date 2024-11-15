@@ -1,5 +1,6 @@
 package com.jeff.dslist.service;
 
+import com.jeff.dslist.dto.GameDTO;
 import com.jeff.dslist.dto.GameMinDTO;
 import com.jeff.dslist.entity.Game;
 import com.jeff.dslist.repository.GameRepository;
@@ -19,5 +20,11 @@ public class GameService {
     public List<GameMinDTO> findAll() {
         List<Game> result = gameRepository.findAll();
         return result.stream().map(GameMinDTO::new).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public GameDTO findById(Long id) {
+        Game result = gameRepository.findById(id).orElse(null);
+        return new GameDTO(result);
     }
 }
